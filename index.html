@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Caledonian Catios & Custom Builds</title>
+
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f5f0;
+    color: #1e2b24;
+    line-height: 1.6;
+  }
+
+  header {
+    background: #1e2b24;
+    color: white;
+    padding: 18px 6%;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.1;
+  }
+
+  .logo span {
+    color: #c89b3c;
+    font-size: 12px;
+    font-weight: normal;
+    letter-spacing: 1px;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 18px;
+    font-size: 14px;
+  }
+
+  nav a:hover {
+    color: #c89b3c;
+  }
+
+  .hero {
+    min-height: 650px;
+    background:
+      linear-gradient(rgba(20,35,28,.58), rgba(20,35,28,.72)),
+      url("https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1800&q=80");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 70px 8%;
+  }
+
+  .hero-content {
+    max-width: 750px;
+  }
+
+  .hero h1 {
+    font-size: clamp(42px, 7vw, 78px);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 span {
+    color: #d6aa4d;
+  }
+
+  .hero p {
+    font-size: 20px;
+    max-width: 600px;
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    display: inline-block;
+    background: #c89b3c;
+    color: white;
+    text-decoration: none;
+    padding: 15px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-right: 10px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn:hover {
+    background: #a87d2c;
+  }
+
+  .btn-outline {
+    background: transparent;
+    border: 2px solid white;
+  }
+
+  section {
+    padding: 80px 8%;
+  }
+
+  .section-title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 38px;
+  }
+
+  .section-intro {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 45px;
+    color: #58615b;
+  }
+
+  .services {
+    background: white;
+  }
+
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+
+  .card {
+    background: #f5f5f0;
+    padding: 30px;
+    border-radius: 10px;
+    border-bottom: 4px solid #c89b3c;
+  }
+
+  .card h3 {
+    margin-bottom: 10px;
+    font-size: 23px;
+  }
+
+  .card-icon {
+    font-size: 40px;
+    margin-bottom: 15px;
+  }
+
+  .build {
+    background: #1e2b24;
+    color: white;
+  }
+
+  .build .section-title {
+    color: white;
+  }
+
+  .build .section-intro {
+    color: #c9d0ca;
+  }
+
+  .builder {
+    max-width: 850px;
+    margin: auto;
+    background: white;
+    color: #1e2b24;
+    padding: 35px;
+    border-radius: 12px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+  }
+
+  select,
+  input,
+  textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccd1cc;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .full {
+    grid-column: 1 / -1;
+  }
+
+  .quote-result {
+    display: none;
+    margin-top: 25px;
+    background: #edf2ed;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .gallery {
+    background: white;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .gallery-item {
+    height: 260px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .gallery-item::after {
+    content: "Your project here";
+    position: absolute;
+    inset: 0;
+    background: rgba(20,35,28,.35);
+    color: white;
+    display: flex;
+    align-items: end;
+    padding: 20px;
+    font-weight: bold;
+    opacity: 0;
+    transition: .3s;
+  }
+
+  .gallery-item:hover::after {
+    opacity: 1;
+  }
+
+  .g1 {
+    background-image: url("https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=800&q=80");
+  }
+
+  .g2 {
+    background-image: url("https://images.unsplash.com/photo-1495360010541-f48722b34f7d?auto=format&fit=crop&w=800&q=80");
+  }
+
+  .g3 {
+    background-image: url("https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=800&q=80");
+  }
+
+  .g4 {
+    background-image: url("https://images.unsplash.com/photo-1548247416-ec66f4900b2e?auto=format&fit=crop&w=800&q=80");
+  }
+
+  .g5 {
+    background-image: url("https://images.unsplash.com/photo-1494256997604-768d1f608cac?auto=format&fit=crop&w=800&q=80");
+  }
+
+  .g6 {
+    background-image: url("https://images.unsplash.com/photo-1519052537078-e6302a4968d4?auto=format&fit=crop&w=800&q=80");
+  }
+
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .about-box {
+    background: #dfe6df;
+    padding: 45px;
+    border-radius: 12px;
+  }
+
+  .ticks {
+    list-style: none;
+    margin-top: 20px;
+  }
+
+  .ticks li {
+    margin: 12px 0;
+  }
+
+  .ticks li::before {
+    content: "✓";
+    color: #c89b3c;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .contact {
+    background: #1e2b24;
+    color: white;
+    text-align: center;
+  }
+
+  .contact p {
+    max-width: 650px;
+    margin: 15px auto 30px;
+    color: #d2d8d3;
+  }
+
+  footer {
+    background: #111a15;
+    color: #aeb8b0;
+    text-align: center;
+    padding: 25px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 800px) {
+    nav {
+      display: none;
+    }
+
+    .service-grid,
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .form-grid,
+    .about {
+      grid-template-columns: 1fr;
+    }
+
+    section {
+      padding: 60px 6%;
+    }
+
+    .hero {
+      padding: 60px 6%;
+      min-height: 600px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    CALEDONIAN CATIOS
+    <br>
+    <span>& CUSTOM BUILDS</span>
+  </div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#build">Build Your Own</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <h1>Bespoke <span>Outdoor Animal Spaces</span> Built Across Scotland.</h1>
+
+    <p>
+      Custom-built catios, aviaries, enclosures and outdoor spaces designed around your animals, your garden and exactly what you need.
+    </p>
+
+    <a href="#build" class="btn">BUILD YOUR OWN</a>
+    <a href="#contact" class="btn btn-outline">GET IN TOUCH</a>
+  </div>
+</section>
+
+<section class="services">
+  <h2 class="section-title">Built Around Your Animals</h2>
+
+  <p class="section-intro">
+    Every build is designed to suit your space. From simple outdoor cat runs to large bespoke animal enclosures.
+  </p>
+
+  <div class="service-grid">
+
+    <div class="card">
+      <div class="card-icon">🐈</div>
+      <h3>Catios</h3>
+      <p>
+        Safe, secure outdoor spaces where your cats can enjoy fresh air and freedom without the risks of roaming.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🦜</div>
+      <h3>Aviaries</h3>
+      <p>
+        Bespoke aviaries designed around your birds, available in a range of sizes and styles.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🛠️</div>
+      <h3>Custom Builds</h3>
+      <p>
+        Got something different in mind? We can design and build custom enclosures and outdoor animal spaces.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section class="build" id="build">
+  <h2 class="section-title">Build Your Own</h2>
+
+  <p class="section-intro">
+    Tell us what you are looking for and we'll use your details to discuss your perfect build.
+  </p>
+
+  <div class="builder">
+
+    <div class="form-grid">
+
+      <div>
+        <label>What would you like built?</label>
+        <select id="type">
+          <option>Catio</option>
+          <option>Aviary</option>
+          <option>Animal Enclosure</option>
+          <option>Custom Build</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Approximate size</label>
+        <select id="size">
+          <option>Small</option>
+          <option>Medium</option>
+          <option>Large</option>
+          <option>Extra Large</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Style</label>
+        <select id="style">
+          <option>Simple & Practical</option>
+          <option>Modern</option>
+          <option>Natural Timber</option>
+          <option>Fully Bespoke</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Extras</label>
+        <select id="extras">
+          <option>No extras selected</option>
+          <option>Shelves & Platforms</option>
+          <option>Climbing Areas</option>
+          <option>Cat Tunnel</option>
+          <option>Weatherproof Roof</option>
+          <option>Multiple Extras</option>
+        </select>
+      </div>
+
+      <div class="full">
+        <label>Your name</label>
+        <input id="name" type="text" placeholder="Your name">
+      </div>
+
+      <div class="full">
+        <label>Location / postcode</label>
+        <input id="location" type="text" placeholder="Where will the build be?">
+      </div>
+
+      <div class="full">
+        <label>Tell us what you have in mind</label>
+        <textarea id="details" placeholder="Describe the space, your animals and anything else you would like included..."></textarea>
+      </div>
+
+      <div class="full">
+        <label>Upload a photo of the area</label>
+        <input type="file">
+      </div>
+
+    </div>
+
+    <br>
+
+    <button class="btn" onclick="buildRequest()">CONTINUE WITH MY BUILD</button>
+
+    <div class="quote-result" id="result">
+      <h3>Your build request is ready!</h3>
+      <p id="summary"></p>
+      <br>
+      <strong>A £50 deposit can be used to secure a design and booking.</strong>
+    </div>
+
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <h2 class="section-title">Recent & Future Builds</h2>
+
+  <p class="section-intro">
+    A selection of the style and quality we aim to bring to every project.
+  </p>
+
+  <div class="gallery-grid">
+    <div class="gallery-item g1"></div>
+    <div class="gallery-item g2"></div>
+    <div class="gallery-item g3"></div>
+    <div class="gallery-item g4"></div>
+    <div class="gallery-item g5"></div>
+    <div class="gallery-item g6"></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about">
+
+    <div>
+      <h2 style="font-size: 38px; margin-bottom: 20px;">
+        Built Properly. Built To Last.
+      </h2>
+
+      <p>
+        Caledonian Catios & Custom Builds creates bespoke outdoor animal spaces across Scotland.
+      </p>
+
+      <ul class="ticks">
+        <li>Custom designs for your space</li>
+        <li>Built around your animals' needs</li>
+        <li>Strong, practical construction</li>
+        <li>Indoor and outdoor access options</li>
+        <li>Large or small projects considered</li>
+      </ul>
+    </div>
+
+    <div class="about-box">
+      <h3 style="font-size: 28px; margin-bottom: 15px;">Your idea. Our build.</h3>
+
+      <p>
+        Whether you already know exactly what you want or only have a rough idea, we can help turn it into a safe and practical outdoor space.
+      </p>
+
+      <br>
+
+      <a href="#build" class="btn">START YOUR BUILD</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <h2 class="section-title">Let's Build Something Brilliant.</h2>
+
+  <p>
+    Get in touch to discuss your catio, aviary, enclosure or completely custom project.
+  </p>
+
+  <a href="#build" class="btn">BUILD YOUR OWN</a>
+</section>
+
+<footer>
+  © 2026 Caledonian Catios & Custom Builds
+  <br>
+  Bespoke Outdoor Animal Spaces Across Scotland
+</footer>
+
+<script>
+  function buildRequest() {
+    const type = document.getElementById("type").value;
+    const size = document.getElementById("size").value;
+    const style = document.getElementById("style").value;
+    const name = document.getElementById("name").value || "Customer";
+    const location = document.getElementById("location").value || "location to be confirmed";
+
+    document.getElementById("summary").innerHTML =
+      "<strong>" + name + "</strong>, your request is for a <strong>" +
+      size + " " + style + " " + type +
+      "</strong> in <strong>" + location + "</strong>.";
+
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+</script>
+
+</body>
+</html>
