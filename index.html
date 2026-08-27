@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Caledonian Catios & Custom Builds</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f5f5f0;
+  color:#1e2b24;
+  line-height:1.6;
+}
+
+header{
+  background:#1e2b24;
+  color:white;
+  padding:18px 6%;
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:bold;
+  line-height:1.1;
+}
+
+.logo span{
+  color:#c89b3c;
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  margin-left:18px;
+  font-size:14px;
+}
+
+.hero{
+  min-height:600px;
+  background:
+    linear-gradient(rgba(20,35,28,.65),rgba(20,35,28,.75)),
+    url("https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=1800&q=80");
+  background-size:cover;
+  background-position:center;
+  color:white;
+  display:flex;
+  align-items:center;
+  padding:70px 8%;
+}
+
+.hero-content{
+  max-width:750px;
+}
+
+.hero h1{
+  font-size:clamp(42px,7vw,78px);
+  line-height:1;
+  margin-bottom:20px;
+}
+
+.hero h1 span{
+  color:#d6aa4d;
+}
+
+.hero p{
+  font-size:20px;
+  margin-bottom:30px;
+}
+
+.btn{
+  display:inline-block;
+  background:#c89b3c;
+  color:white;
+  padding:15px 25px;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+  text-decoration:none;
+}
+
+.btn:hover{
+  background:#a87d2c;
+}
+
+section{
+  padding:80px 8%;
+}
+
+.section-title{
+  text-align:center;
+  margin-bottom:15px;
+  font-size:38px;
+}
+
+.section-intro{
+  text-align:center;
+  max-width:750px;
+  margin:0 auto 40px;
+  color:#58615b;
+}
+
+.build{
+  background:#1e2b24;
+  color:white;
+}
+
+.build .section-intro{
+  color:#c9d0ca;
+}
+
+.builder{
+  max-width:1000px;
+  margin:auto;
+  background:white;
+  color:#1e2b24;
+  padding:30px;
+  border-radius:12px;
+}
+
+.builder h3{
+  margin:25px 0 12px;
+}
+
+.option-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.option-card{
+  border:2px solid #d7ddd8;
+  border-radius:10px;
+  padding:15px;
+  cursor:pointer;
+  background:#fafbf9;
+  transition:.2s;
+}
+
+.option-card:hover{
+  border-color:#c89b3c;
+}
+
+.option-card.selected{
+  border-color:#c89b3c;
+  background:#fff8e8;
+}
+
+.option-card input{
+  margin-right:10px;
+}
+
+.option-title{
+  font-weight:bold;
+}
+
+.option-price{
+  color:#8a681f;
+  font-weight:bold;
+}
+
+.field{
+  margin-top:15px;
+}
+
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+select,
+input[type="number"],
+input[type="text"],
+textarea{
+  width:100%;
+  padding:14px;
+  border:1px solid #ccd1cc;
+  border-radius:6px;
+  font-size:16px;
+}
+
+textarea{
+  min-height:100px;
+}
+
+.addon{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  padding:15px;
+  border-bottom:1px solid #e2e5e2;
+}
+
+.addon:last-child{
+  border-bottom:none;
+}
+
+.addon label{
+  margin:0;
+  cursor:pointer;
+}
+
+.quantity{
+  width:90px !important;
+}
+
+.hidden{
+  display:none;
+}
+
+.live-price{
+  margin-top:30px;
+  background:#1e2b24;
+  color:white;
+  padding:25px;
+  border-radius:12px;
+  position:sticky;
+  bottom:10px;
+}
+
+.live-price small{
+  color:#d0d8d2;
+}
+
+.price{
+  font-size:48px;
+  font-weight:bold;
+  color:#d6aa4d;
+}
+
+.breakdown{
+  margin-top:15px;
+  padding-top:15px;
+  border-top:1px solid #526058;
+  font-size:14px;
+  color:#d9e0db;
+}
+
+.result{
+  display:none;
+  margin-top:25px;
+  padding:20px;
+  background:#edf2ed;
+  border-radius:8px;
+}
+
+.base-info{
+  margin-top:25px;
+  padding:20px;
+  background:#f5f5f0;
+  border-radius:10px;
+}
+
+.good{
+  color:#267143;
+  font-weight:bold;
+}
+
+.bad{
+  color:#a22d2d;
+  font-weight:bold;
+}
+
+footer{
+  background:#111a15;
+  color:#aeb8b0;
+  text-align:center;
+  padding:25px;
+}
+
+@media(max-width:700px){
+  nav{
+    display:none;
+  }
+
+  .option-grid{
+    grid-template-columns:1fr;
+  }
+
+  section{
+    padding:60px 5%;
+  }
+
+  .builder{
+    padding:20px;
+  }
+
+  .addon{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">
+    CALEDONIAN CATIOS
+    <br>
+    <span>& CUSTOM BUILDS</span>
+  </div>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#build">Build Yours</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-content">
+    <h1>Build Your <span>Perfect Catio.</span></h1>
+
+    <p>
+      Choose your size, style, layout and extras. Your estimated price updates live as you build.
+    </p>
+
+    <a href="#build" class="btn">BUILD YOUR CATIO</a>
+  </div>
+</section>
+
+<section class="build" id="build">
+
+  <h2 class="section-title">Build Your Own Catio</h2>
+
+  <p class="section-intro">
+    Select your options below to see your live estimated price.
+  </p>
+
+  <div class="builder">
+
+    <h3>1. Choose your size</h3>
+
+    <div class="field">
+      <select id="size" onchange="updatePrice()">
+        <option value="1.5x1.5">1.5 × 1.5m</option>
+        <option value="2x1.5">2 × 1.5m</option>
+        <option value="2x2">2 × 2m</option>
+        <option value="3x2">3 × 2m</option>
+        <option value="4x2">4 × 2m</option>
+        <option value="3x3">3 × 3m</option>
+        <option value="4x3">4 × 3m</option>
+      </select>
+    </div>
+
+    <h3>2. Choose your style</h3>
+
+    <div class="option-grid">
+
+      <label class="option-card selected">
+        <input type="radio" name="style" value="fullLean" checked onchange="selectCard(this); updatePrice()">
+        <span class="option-title">Full Mesh Lean-to</span>
+      </label>
+
+      <label class="option-card">
+        <input type="radio" name="style" value="fullFree" onchange="selectCard(this); updatePrice()">
+        <span class="option-title">Full Mesh Freestanding</span>
+      </label>
+
+      <label class="option-card">
+        <input type="radio" name="style" value="boardLean" onchange="selectCard(this); updatePrice()">
+        <span class="option-title">Partially Boarded Lean-to</span>
+      </label>
+
+      <label class="option-card">
+        <input type="radio" name="style" value="boardFree" onchange="selectCard(this); updatePrice()">
+        <span class="option-title">Partially Boarded Freestanding</span>
+      </label>
+
+    </div>
+
+    <h3>3. Optional extras</h3>
+
+    <div class="addon">
+      <label>
+        <input type="checkbox" id="doubleDoor" onchange="updatePrice()">
+        Double main door
+        <span class="option-price">+£100</span>
+      </label>
+    </div>
+
+    <div class="addon">
+      <label>
+        <input type="checkbox" id="platform" onchange="updatePrice()">
+        Platform shelves
+        <span class="option-price">+£20 each</span>
+      </label>
+
+      <input
+        type="number"
+        id="platformQty"
+        class="quantity"
+        min="0"
+        value="0"
+        onchange="updatePrice()"
+        oninput="updatePrice()"
+        placeholder="Qty">
+    </div>
+
+    <div class="addon">
+      <label>
+        <input type="checkbox" id="rope" onchange="updatePrice()">
+        50mm thick hanging rope
+        <span class="option-price">+£20 each</span>
+      </label>
+
+      <input
+        type="number"
+        id="ropeQty"
+        class="quantity"
+        min="0"
+        value="0"
+        onchange="updatePrice()"
+        oninput="updatePrice()"
+        placeholder="Qty">
+    </div>
+
+    <div class="addon">
+      <label>
+        <input type="checkbox" id="partition" onchange="togglePartition(); updatePrice()">
+        Internal safety partition with door
+        <span class="option-price">+£100 door + £50 per metre</span>
+      </label>
+    </div>
+
+    <div class="field hidden" id="partitionLengthBox">
+      <label>Partition length in metres</label>
+
+      <input
+        type="number"
+        id="partitionLength"
+        min="0"
+        step="0.1"
+        value="0"
+        onchange="updatePrice()"
+        oninput="updatePrice()">
+    </div>
+
+    <h3>4. Base options</h3>
+
+    <div class="addon">
+      <label>
+        <input type="checkbox" id="astroturf" onchange="toggleArea('astroturfArea'); updatePrice()">
+        Pet-friendly astroturf
+        <span class="option-price">+£25/m²</span>
+      </label>
+    </div>
+
+    <div class="field hidden" id="astroturfAreaBox">
+      <label>Astroturf area in m²</label>
+
+      <input
+        type="number"
+        id="astroturfArea"
+        min="0"
+        step="0.1"
+        value="0"
+        onchange="updatePrice()"
+        oninput="updatePrice()">
+    </div>
+
+    <div class="addon">
+      <label>
+        <input type="checkbox" id="composite" onchange="toggleArea('compositeArea'); updatePrice()">
+        Composite decking base
+        <span class="option-price">+£140/m²</span>
+      </label>
+    </div>
+
+    <div class="field hidden" id="compositeAreaBox">
+      <label>Composite decking area in m²</label>
+
+      <input
+        type="number"
+        id="compositeArea"
+        min="0"
+        step="0.1"
+        value="0"
+        onchange="updatePrice()"
+        oninput="updatePrice()">
+    </div>
+
+    <div class="addon">
+      <label>
+        <input type="checkbox" id="timberDecking" onchange="toggleArea('timberArea'); updatePrice()">
+        Timber decking base
+        <span class="option-price">+£85/m²</span>
+      </label>
+    </div>
+
+    <div class="field hidden" id="timberAreaBox">
+      <label>Timber decking area in m²</label>
+
+      <input
+        type="number"
+        id="timberArea"
+        min="0"
+        step="0.1"
+        value="0"
+        onchange="updatePrice()"
+        oninput="updatePrice()">
+    </div>
+
+    <div class="addon">
+      <label>
+        <input type="checkbox" id="perimeter" onchange="toggleArea('perimeterLength'); updatePrice()">
+        Perimeter timber base
+        <span class="option-price">+£20 per metre</span>
+      </label>
+    </div>
+
+    <div class="field hidden" id="perimeterLengthBox">
+      <label>Perimeter length in metres</label>
+
+      <input
+        type="number"
+        id="perimeterLength"
+        min="0"
+        step="0.1"
+        value="0"
+        onchange="updatePrice()"
+        oninput="updatePrice()">
+    </div>
+
+    <div class="base-info">
+      <h3>Base requirements</h3>
+
+      <p class="good">
+        Suitable bases: Concrete, slabs, or existing decking if it is not rotten.
+      </p>
+
+      <br>
+
+      <p class="bad">
+        Unsuitable bases: Grass, stone chips, or mud.
+      </p>
+    </div>
+
+    <div class="live-price">
+
+      <small>ESTIMATED LIVE PRICE</small>
+
+      <div class="price" id="totalPrice">£600</div>
+
+      <div class="breakdown" id="breakdown">
+        Base catio: £600
+      </div>
+
+    </div>
+
+    <h3>5. Your details</h3>
+
+    <div class="field">
+      <label>Your name</label>
+      <input type="text" id="name" placeholder="Your name">
+    </div>
+
+    <div class="field">
+      <label>Location / postcode</label>
+      <input type="text" id="location" placeholder="Your location">
+    </div>
+
+    <div class="field">
+      <label>Anything else you would like?</label>
+      <textarea id="notes" placeholder="Tell us anything else about your build..."></textarea>
+    </div>
+
+    <br>
+
+    <button class="btn" onclick="submitBuild()">SEND BUILD REQUEST</button>
+
+    <div class="result" id="result">
+      <h3>Your build request is ready!</h3>
+      <p id="summary"></p>
+    </div>
+
+  </div>
+
+</section>
+
+<section id="contact">
+  <h2 class="section-title">Caledonian Catios & Custom Builds</h2>
+
+  <p class="section-intro">
+    Bespoke outdoor animal spaces built across Scotland.
+  </p>
+</section>
+
+<footer>
+  © 2026 Caledonian Catios & Custom Builds
+</footer>
+
+<script>
+
+const prices = {
+
+  "1.5x1.5":{
+    fullLean:600,
+    fullFree:700,
+    boardLean:1000,
+    boardFree:1100
+  },
+
+  "2x1.5":{
+    fullLean:750,
+    fullFree:875,
+    boardLean:1250,
+    boardFree:1375
+  },
+
+  "2x2":{
+    fullLean:900,
+    fullFree:1050,
+    boardLean:1500,
+    boardFree:1650
+  },
+
+  "3x2":{
+    fullLean:1080,
+    fullFree:1260,
+    boardLean:1800,
+    boardFree:1980
+  },
+
+  "4x2":{
+    fullLean:1200,
+    fullFree:1400,
+    boardLean:2000,
+    boardFree:2200
+  },
+
+  "3x3":{
+    fullLean:1260,
+    fullFree:1470,
+    boardLean:2100,
+    boardFree:2310
+  },
+
+  "4x3":{
+    fullLean:1440,
+    fullFree:1680,
+    boardLean:2400,
+    boardFree:2640
+  }
+
+};
+
+function money(value){
+  return "£" + Math.round(value).toLocaleString("en-GB");
+}
+
+function selectCard(input){
+
+  document.querySelectorAll(".option-card").forEach(card=>{
+    card.classList.remove("selected");
+  });
+
+  input.closest(".option-card").classList.add("selected");
+}
+
+function togglePartition(){
+
+  const box=document.getElementById("partitionLengthBox");
+
+  box.classList.toggle(
+    "hidden",
+    !document.getElementById("partition").checked
+  );
+}
+
+function toggleArea(id){
+
+  const box=document.getElementById(id+"Box");
+
+  const checkboxMap={
+    astroturfArea:"astroturf",
+    compositeArea:"composite",
+    timberArea:"timberDecking",
+    perimeterLength:"perimeter"
+  };
+
+  box.classList.toggle(
+    "hidden",
+    !document.getElementById(checkboxMap[id]).checked
+  );
+}
+
+function updatePrice(){
+
+  const size=document.getElementById("size").value;
+
+  const style=document.querySelector(
+    'input[name="style"]:checked'
+  ).value;
+
+  let total=prices[size][style];
+
+  let breakdown=[
+    "Base catio: "+money(total)
+  ];
+
+  if(document.getElementById("doubleDoor").checked){
+
+    total+=100;
+
+    breakdown.push(
+      "Double main door: +£100"
+    );
+  }
+
+  if(document.getElementById("platform").checked){
+
+    const qty=Math.max(
+      0,
+      Number(document.getElementById("platformQty").value)||0
+    );
+
+    const cost=qty*20;
+
+    total+=cost;
+
+    if(qty>0){
+      breakdown.push(
+        "Platform shelves ("+qty+"): +"+money(cost)
+      );
+    }
+  }
+
+  if(document.getElementById("rope").checked){
+
+    const qty=Math.max(
+      0,
+      Number(document.getElementById("ropeQty").value)||0
+    );
+
+    const cost=qty*20;
+
+    total+=cost;
+
+    if(qty>0){
+      breakdown.push(
+        "50mm hanging rope ("+qty+"): +"+money(cost)
+      );
+    }
+  }
+
+  if(document.getElementById("partition").checked){
+
+    const length=Math.max(
+      0,
+      Number(document.getElementById("partitionLength").value)||0
+    );
+
+    const cost=100+(length*50);
+
+    total+=cost;
+
+    breakdown.push(
+      "Internal safety partition: +"+money(cost)
+    );
+  }
+
+  if(document.getElementById("astroturf").checked){
+
+    const area=Math.max(
+      0,
+      Number(document.getElementById("astroturfArea").value)||0
+    );
+
+    const cost=area*25;
+
+    total+=cost;
+
+    if(area>0){
+      breakdown.push(
+        "Pet-friendly astroturf ("+area+"m²): +"+money(cost)
+      );
+    }
+  }
+
+  if(document.getElementById("composite").checked){
+
+    const area=Math.max(
+      0,
+      Number(document.getElementById("compositeArea").value)||0
+    );
+
+    const cost=area*140;
+
+    total+=cost;
+
+    if(area>0){
+      breakdown.push(
+        "Composite decking ("+area+"m²): +"+money(cost)
+      );
+    }
+  }
+
+  if(document.getElementById("timberDecking").checked){
+
+    const area=Math.max(
+      0,
+      Number(document.getElementById("timberArea").value)||0
+    );
+
+    const cost=area*85;
+
+    total+=cost;
+
+    if(area>0){
+      breakdown.push(
+        "Timber decking ("+area+"m²): +"+money(cost)
+      );
+    }
+  }
+
+  if(document.getElementById("perimeter").checked){
+
+    const length=Math.max(
+      0,
+      Number(document.getElementById("perimeterLength").value)||0
+    );
+
+    const cost=length*20;
+
+    total+=cost;
+
+    if(length>0){
+      breakdown.push(
+        "Perimeter timber base ("+length+"m): +"+money(cost)
+      );
+    }
+  }
+
+  document.getElementById("totalPrice").textContent=money(total);
+
+  document.getElementById("breakdown").innerHTML=
+    breakdown.join("<br>");
+
+}
+
+function submitBuild(){
+
+  const total=document.getElementById("totalPrice").textContent;
+
+  const size=document.getElementById("size").value;
+
+  const name=
+    document.getElementById("name").value
+    ||"Customer";
+
+  const location=
+    document.getElementById("location").value
+    ||"location to be confirmed";
+
+  document.getElementById("summary").innerHTML=
+    "<strong>"+name+"</strong>, your estimated build price is <strong>"+total+
+    "</strong>.<br><br>Size selected: <strong>"+size.replace("x"," × ")+"m</strong>."+
+    "<br>Location: <strong>"+location+"</strong>.";
+
+  document.getElementById("result").style.display="block";
+
+  document.getElementById("result").scrollIntoView({
+    behavior:"smooth"
+  });
+
+}
+
+updatePrice();
+
+</script>
+
+</body>
+</html>
