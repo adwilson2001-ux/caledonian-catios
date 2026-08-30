@@ -179,6 +179,57 @@ section{
   font-weight:bold;
 }
 
+/* STYLE PHOTOS */
+
+.style-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+}
+
+.style-card{
+  border:3px solid #d7ddd8;
+  border-radius:12px;
+  overflow:hidden;
+  cursor:pointer;
+  background:#fafbf9;
+  transition:.2s;
+}
+
+.style-card:hover{
+  border-color:#c89b3c;
+}
+
+.style-card.selected{
+  border-color:#c89b3c;
+  background:#fff8e8;
+}
+
+.style-card img{
+  width:100%;
+  height:300px;
+  object-fit:cover;
+  display:block;
+}
+
+.style-card-content{
+  padding:15px;
+}
+
+.style-card-content h4{
+  font-size:21px;
+  margin-bottom:5px;
+}
+
+.style-card-content p{
+  color:#58615b;
+  font-size:14px;
+}
+
+.style-radio{
+  padding:12px 15px 0;
+}
+
 .field{
   margin-top:15px;
 }
@@ -192,12 +243,16 @@ label{
 select,
 input[type="number"],
 input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="file"],
 textarea{
   width:100%;
   padding:14px;
   border:1px solid #ccd1cc;
   border-radius:6px;
   font-size:16px;
+  background:white;
 }
 
 textarea{
@@ -230,6 +285,36 @@ textarea{
   display:none;
 }
 
+/* AUTOMATIC MEASUREMENTS */
+
+.measure-box{
+  margin-top:20px;
+  padding:20px;
+  background:#f5f5f0;
+  border-radius:10px;
+}
+
+.measure-box h4{
+  font-size:20px;
+  margin-bottom:10px;
+}
+
+.measurement{
+  margin-top:6px;
+}
+
+.measurement strong{
+  color:#8a681f;
+}
+
+.custom-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+/* PRICE */
+
 .live-price{
   margin-top:30px;
   background:#1e2b24;
@@ -256,6 +341,43 @@ textarea{
   border-top:1px solid #526058;
   font-size:14px;
   color:#d9e0db;
+}
+
+/* BOOKING */
+
+.deposit-box{
+  margin-top:30px;
+  padding:22px;
+  background:#fff8e8;
+  border:2px solid #c89b3c;
+  border-radius:10px;
+}
+
+.deposit-box h3{
+  margin:0 0 8px;
+}
+
+.deposit-price{
+  font-size:30px;
+  font-weight:bold;
+  color:#8a681f;
+}
+
+.deposit-box p{
+  margin-top:8px;
+}
+
+.booking-notice{
+  margin-top:15px;
+  padding:15px;
+  background:#edf2ed;
+  border-radius:8px;
+}
+
+.upload-help{
+  color:#58615b;
+  font-size:13px;
+  margin-top:5px;
 }
 
 .result{
@@ -291,11 +413,14 @@ footer{
 }
 
 @media(max-width:700px){
+
   nav{
     display:none;
   }
 
-  .option-grid{
+  .option-grid,
+  .style-grid,
+  .custom-grid{
     grid-template-columns:1fr;
   }
 
@@ -311,6 +436,11 @@ footer{
     align-items:flex-start;
     flex-direction:column;
   }
+
+  .style-card img{
+    height:240px;
+  }
+
 }
 </style>
 </head>
@@ -318,6 +448,7 @@ footer{
 <body>
 
 <header>
+
   <div class="logo">
     CALEDONIAN CATIOS
     <br>
@@ -329,86 +460,358 @@ footer{
     <a href="#build">Build Yours</a>
     <a href="#contact">Contact</a>
   </nav>
+
 </header>
 
+
 <section class="hero" id="home">
+
   <div class="hero-content">
-    <h1>Build Your <span>Perfect Catio.</span></h1>
+
+    <h1>
+      Build Your <span>Perfect Catio.</span>
+    </h1>
 
     <p>
-      Choose your size, style, layout and extras. Your estimated price updates live as you build.
+      Choose your size, style, layout and extras.
+      Your estimated price updates live as you build.
     </p>
 
-    <a href="#build" class="btn">BUILD YOUR CATIO</a>
+    <a href="#build" class="btn">
+      BUILD YOUR CATIO
+    </a>
+
   </div>
+
 </section>
+
 
 <section class="build" id="build">
 
-  <h2 class="section-title">Build Your Own Catio</h2>
+  <h2 class="section-title">
+    Build Your Own Catio
+  </h2>
 
   <p class="section-intro">
     Select your options below to see your live estimated price.
   </p>
 
+
   <div class="builder">
+
+
+    <!-- SIZE -->
 
     <h3>1. Choose your size</h3>
 
     <div class="field">
-      <select id="size" onchange="updatePrice()">
-        <option value="1.5x1.5">1.5 × 1.5m</option>
-        <option value="2x1.5">2 × 1.5m</option>
-        <option value="2x2">2 × 2m</option>
-        <option value="3x2">3 × 2m</option>
-        <option value="4x2">4 × 2m</option>
-        <option value="3x3">3 × 3m</option>
-        <option value="4x3">4 × 3m</option>
+
+      <select id="size">
+
+        <option value="1.5x1.5">
+          1.5 × 1.5m
+        </option>
+
+        <option value="2x1.5">
+          2 × 1.5m
+        </option>
+
+        <option value="2x2">
+          2 × 2m
+        </option>
+
+        <option value="3x2">
+          3 × 2m
+        </option>
+
+        <option value="4x2">
+          4 × 2m
+        </option>
+
+        <option value="3x3">
+          3 × 3m
+        </option>
+
+        <option value="4x3">
+          4 × 3m
+        </option>
+
+        <option value="custom">
+          Custom size
+        </option>
+
       </select>
+
     </div>
+
+
+    <!-- CUSTOM SIZE -->
+
+    <div
+      class="measure-box hidden"
+      id="customSizeBox"
+    >
+
+      <h4>
+        Custom size
+      </h4>
+
+      <p>
+        Enter your required dimensions below.
+        Custom sizes will be quoted individually.
+      </p>
+
+      <div class="custom-grid">
+
+        <div class="field">
+
+          <label>
+            Length (metres)
+          </label>
+
+          <input
+            type="number"
+            id="customLength"
+            min="0.1"
+            step="0.1"
+            placeholder="e.g. 4.5"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label>
+            Width (metres)
+          </label>
+
+          <input
+            type="number"
+            id="customWidth"
+            min="0.1"
+            step="0.1"
+            placeholder="e.g. 2.5"
+          >
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- AUTOMATIC MEASUREMENTS -->
+
+    <div class="measure-box">
+
+      <h4>
+        Automatic measurements
+      </h4>
+
+      <div class="measurement">
+        Floor area:
+        <strong id="floorArea">
+          2.25m²
+        </strong>
+      </div>
+
+      <div class="measurement">
+        Perimeter:
+        <strong id="autoPerimeter">
+          6m
+        </strong>
+      </div>
+
+    </div>
+
+
+    <!-- STYLE -->
 
     <h3>2. Choose your style</h3>
 
+    <div class="style-grid">
+
+
+      <label class="style-card selected">
+
+        <div class="style-radio">
+
+          <input
+            type="radio"
+            name="visualStyle"
+            value="full"
+            checked
+          >
+
+        </div>
+
+        <img
+          src="50EF7379-CFBF-4B50-A49E-EC32A2075D53.png"
+          alt="Full mesh catio"
+        >
+
+        <div class="style-card-content">
+
+          <h4>
+            Full Mesh Catio
+          </h4>
+
+          <p>
+            Maximum visibility and airflow.
+          </p>
+
+        </div>
+
+      </label>
+
+
+      <label class="style-card">
+
+        <div class="style-radio">
+
+          <input
+            type="radio"
+            name="visualStyle"
+            value="boarded"
+          >
+
+        </div>
+
+        <img
+          src="2EF2B749-8F29-41D3-9204-A5091B0DD7D6.png"
+          alt="Partially boarded catio"
+        >
+
+        <div class="style-card-content">
+
+          <h4>
+            Partially Boarded Catio
+          </h4>
+
+          <p>
+            Extra privacy and shelter while keeping plenty of visibility.
+          </p>
+
+        </div>
+
+      </label>
+
+    </div>
+
+
+    <!-- ORIGINAL PRICE STYLE OPTIONS -->
+
+    <h3>3. Choose your layout</h3>
+
     <div class="option-grid">
 
+
       <label class="option-card selected">
-        <input type="radio" name="style" value="fullLean" checked onchange="selectCard(this); updatePrice()">
-        <span class="option-title">Full Mesh Lean-to</span>
+
+        <input
+          type="radio"
+          name="style"
+          value="fullLean"
+          checked
+        >
+
+        <span class="option-title">
+          Full Mesh Lean-to
+        </span>
+
       </label>
 
-      <label class="option-card">
-        <input type="radio" name="style" value="fullFree" onchange="selectCard(this); updatePrice()">
-        <span class="option-title">Full Mesh Freestanding</span>
-      </label>
 
       <label class="option-card">
-        <input type="radio" name="style" value="boardLean" onchange="selectCard(this); updatePrice()">
-        <span class="option-title">Partially Boarded Lean-to</span>
+
+        <input
+          type="radio"
+          name="style"
+          value="fullFree"
+        >
+
+        <span class="option-title">
+          Full Mesh Freestanding
+        </span>
+
       </label>
 
+
       <label class="option-card">
-        <input type="radio" name="style" value="boardFree" onchange="selectCard(this); updatePrice()">
-        <span class="option-title">Partially Boarded Freestanding</span>
+
+        <input
+          type="radio"
+          name="style"
+          value="boardLean"
+        >
+
+        <span class="option-title">
+          Partially Boarded Lean-to
+        </span>
+
+      </label>
+
+
+      <label class="option-card">
+
+        <input
+          type="radio"
+          name="style"
+          value="boardFree"
+        >
+
+        <span class="option-title">
+          Partially Boarded Freestanding
+        </span>
+
       </label>
 
     </div>
 
-    <h3>3. Optional extras</h3>
+
+    <!-- EXTRAS -->
+
+    <h3>4. Optional extras</h3>
+
 
     <div class="addon">
+
       <label>
-        <input type="checkbox" id="doubleDoor" onchange="updatePrice()">
+
+        <input
+          type="checkbox"
+          id="doubleDoor"
+        >
+
         Double main door
-        <span class="option-price">+£100</span>
+
+        <span class="option-price">
+          +£100
+        </span>
+
       </label>
+
     </div>
 
+
     <div class="addon">
+
       <label>
-        <input type="checkbox" id="platform" onchange="updatePrice()">
+
+        <input
+          type="checkbox"
+          id="platform"
+        >
+
         Platform shelves
-        <span class="option-price">+£20 each</span>
+
+        <span class="option-price">
+          +£20 each
+        </span>
+
       </label>
+
 
       <input
         type="number"
@@ -416,17 +819,29 @@ footer{
         class="quantity"
         min="0"
         value="0"
-        onchange="updatePrice()"
-        oninput="updatePrice()"
-        placeholder="Qty">
+        placeholder="Qty"
+      >
+
     </div>
 
+
     <div class="addon">
+
       <label>
-        <input type="checkbox" id="rope" onchange="updatePrice()">
+
+        <input
+          type="checkbox"
+          id="rope"
+        >
+
         50mm thick hanging rope
-        <span class="option-price">+£20 each</span>
+
+        <span class="option-price">
+          +£20 each
+        </span>
+
       </label>
+
 
       <input
         type="number"
@@ -434,21 +849,40 @@ footer{
         class="quantity"
         min="0"
         value="0"
-        onchange="updatePrice()"
-        oninput="updatePrice()"
-        placeholder="Qty">
+        placeholder="Qty"
+      >
+
     </div>
+
 
     <div class="addon">
+
       <label>
-        <input type="checkbox" id="partition" onchange="togglePartition(); updatePrice()">
+
+        <input
+          type="checkbox"
+          id="partition"
+        >
+
         Internal safety partition with door
-        <span class="option-price">+£100 door + £50 per metre</span>
+
+        <span class="option-price">
+          +£100 door + £50 per metre
+        </span>
+
       </label>
+
     </div>
 
-    <div class="field hidden" id="partitionLengthBox">
-      <label>Partition length in metres</label>
+
+    <div
+      class="field hidden"
+      id="partitionLengthBox"
+    >
+
+      <label>
+        Partition length in metres
+      </label>
 
       <input
         type="number"
@@ -456,98 +890,176 @@ footer{
         min="0"
         step="0.1"
         value="0"
-        onchange="updatePrice()"
-        oninput="updatePrice()">
+        readonly
+      >
+
     </div>
 
-    <h3>4. Base options</h3>
+
+    <!-- BASE OPTIONS -->
+
+    <h3>5. Base options</h3>
+
 
     <div class="addon">
+
       <label>
-        <input type="checkbox" id="astroturf" onchange="toggleArea('astroturfArea'); updatePrice()">
+
+        <input
+          type="checkbox"
+          id="astroturf"
+        >
+
         Pet-friendly astroturf
-        <span class="option-price">+£25/m²</span>
+
+        <span class="option-price">
+          +£25/m²
+        </span>
+
       </label>
+
     </div>
 
-    <div class="field hidden" id="astroturfAreaBox">
-      <label>Astroturf area in m²</label>
+
+    <div
+      class="field hidden"
+      id="astroturfAreaBox"
+    >
+
+      <label>
+        Astroturf area in m²
+      </label>
 
       <input
         type="number"
         id="astroturfArea"
-        min="0"
-        step="0.1"
-        value="0"
-        onchange="updatePrice()"
-        oninput="updatePrice()">
+        readonly
+      >
+
     </div>
+
 
     <div class="addon">
+
       <label>
-        <input type="checkbox" id="composite" onchange="toggleArea('compositeArea'); updatePrice()">
+
+        <input
+          type="checkbox"
+          id="composite"
+        >
+
         Composite decking base
-        <span class="option-price">+£140/m²</span>
+
+        <span class="option-price">
+          +£140/m²
+        </span>
+
       </label>
+
     </div>
 
-    <div class="field hidden" id="compositeAreaBox">
-      <label>Composite decking area in m²</label>
+
+    <div
+      class="field hidden"
+      id="compositeAreaBox"
+    >
+
+      <label>
+        Composite decking area in m²
+      </label>
 
       <input
         type="number"
         id="compositeArea"
-        min="0"
-        step="0.1"
-        value="0"
-        onchange="updatePrice()"
-        oninput="updatePrice()">
+        readonly
+      >
+
     </div>
+
 
     <div class="addon">
+
       <label>
-        <input type="checkbox" id="timberDecking" onchange="toggleArea('timberArea'); updatePrice()">
+
+        <input
+          type="checkbox"
+          id="timberDecking"
+        >
+
         Timber decking base
-        <span class="option-price">+£85/m²</span>
+
+        <span class="option-price">
+          +£85/m²
+        </span>
+
       </label>
+
     </div>
 
-    <div class="field hidden" id="timberAreaBox">
-      <label>Timber decking area in m²</label>
+
+    <div
+      class="field hidden"
+      id="timberAreaBox"
+    >
+
+      <label>
+        Timber decking area in m²
+      </label>
 
       <input
         type="number"
         id="timberArea"
-        min="0"
-        step="0.1"
-        value="0"
-        onchange="updatePrice()"
-        oninput="updatePrice()">
+        readonly
+      >
+
     </div>
+
 
     <div class="addon">
+
       <label>
-        <input type="checkbox" id="perimeter" onchange="toggleArea('perimeterLength'); updatePrice()">
+
+        <input
+          type="checkbox"
+          id="perimeter"
+        >
+
         Perimeter timber base
-        <span class="option-price">+£20 per metre</span>
+
+        <span class="option-price">
+          +£20 per metre
+        </span>
+
       </label>
+
     </div>
 
-    <div class="field hidden" id="perimeterLengthBox">
-      <label>Perimeter length in metres</label>
+
+    <div
+      class="field hidden"
+      id="perimeterLengthBox"
+    >
+
+      <label>
+        Perimeter length in metres
+      </label>
 
       <input
         type="number"
         id="perimeterLength"
-        min="0"
-        step="0.1"
-        value="0"
-        onchange="updatePrice()"
-        oninput="updatePrice()">
+        readonly
+      >
+
     </div>
 
+
+    <!-- BASE INFORMATION -->
+
     <div class="base-info">
-      <h3>Base requirements</h3>
+
+      <h3>
+        Base requirements
+      </h3>
 
       <p class="good">
         Suitable bases: Concrete, slabs, or existing decking if it is not rotten.
@@ -558,63 +1070,263 @@ footer{
       <p class="bad">
         Unsuitable bases: Grass, stone chips, or mud.
       </p>
+
     </div>
+
+
+    <!-- LIVE PRICE -->
 
     <div class="live-price">
 
-      <small>ESTIMATED LIVE PRICE</small>
+      <small>
+        ESTIMATED LIVE PRICE
+      </small>
 
-      <div class="price" id="totalPrice">£600</div>
+      <div
+        class="price"
+        id="totalPrice"
+      >
+        £600
+      </div>
 
-      <div class="breakdown" id="breakdown">
+      <div
+        class="breakdown"
+        id="breakdown"
+      >
         Base catio: £600
       </div>
 
     </div>
 
-    <h3>5. Your details</h3>
 
-    <div class="field">
-      <label>Your name</label>
-      <input type="text" id="name" placeholder="Your name">
+    <!-- DEPOSIT -->
+
+    <div class="deposit-box">
+
+      <h3>
+        Secure your booking
+      </h3>
+
+      <div class="deposit-price">
+        £50 deposit
+      </div>
+
+      <p>
+        A £50 deposit is required to secure your booking
+        and allow materials to be ordered.
+      </p>
+
+      <div class="booking-notice">
+
+        <strong>
+          Installation timescale
+        </strong>
+
+        <p>
+          We aim to install your catio within 1 week once
+          your booking and materials have been confirmed.
+        </p>
+
+        <p>
+          We'll be in touch beforehand to arrange a site
+          check and confirm the installation area and access.
+        </p>
+
+      </div>
+
     </div>
 
-    <div class="field">
-      <label>Location / postcode</label>
-      <input type="text" id="location" placeholder="Your location">
-    </div>
+
+    <!-- CUSTOMER DETAILS -->
+
+    <h3>
+      6. Booking details
+    </h3>
+
 
     <div class="field">
-      <label>Anything else you would like?</label>
-      <textarea id="notes" placeholder="Tell us anything else about your build..."></textarea>
+
+      <label>
+        Full name *
+      </label>
+
+      <input
+        type="text"
+        id="name"
+        placeholder="Your full name"
+      >
+
     </div>
+
+
+    <div class="field">
+
+      <label>
+        Address *
+      </label>
+
+      <input
+        type="text"
+        id="address"
+        placeholder="Your address"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        Postcode *
+      </label>
+
+      <input
+        type="text"
+        id="postcode"
+        placeholder="Your postcode"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        Email *
+      </label>
+
+      <input
+        type="email"
+        id="email"
+        placeholder="you@example.com"
+      >
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        Phone number *
+      </label>
+
+      <input
+        type="tel"
+        id="phone"
+        placeholder="Your phone number"
+      >
+
+    </div>
+
+
+    <!-- AREA PHOTO -->
+
+    <div class="field">
+
+      <label>
+        Photo of installation area
+      </label>
+
+      <input
+        type="file"
+        id="areaPhoto"
+        accept="image/*"
+      >
+
+      <p class="upload-help">
+        Please upload a clear photo showing where you would like the catio installed.
+      </p>
+
+    </div>
+
+
+    <!-- ACCESS PHOTO -->
+
+    <div class="field">
+
+      <label>
+        Photo of access to the area
+      </label>
+
+      <input
+        type="file"
+        id="accessPhoto"
+        accept="image/*"
+      >
+
+      <p class="upload-help">
+        Please show gates, paths, steps or other access we may need to use.
+      </p>
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        Anything else you would like?
+      </label>
+
+      <textarea
+        id="notes"
+        placeholder="Tell us anything else about your build..."
+      ></textarea>
+
+    </div>
+
 
     <br>
 
-    <button class="btn" onclick="submitBuild()">SEND BUILD REQUEST</button>
 
-    <div class="result" id="result">
-      <h3>Your build request is ready!</h3>
+    <button
+      class="btn"
+      type="button"
+      id="submitButton"
+    >
+      SEND BUILD REQUEST
+    </button>
+
+
+    <div
+      class="result"
+      id="result"
+    >
+
+      <h3>
+        Your build request is ready!
+      </h3>
+
       <p id="summary"></p>
+
     </div>
+
 
   </div>
 
 </section>
 
+
 <section id="contact">
-  <h2 class="section-title">Caledonian Catios & Custom Builds</h2>
+
+  <h2 class="section-title">
+    Caledonian Catios & Custom Builds
+  </h2>
 
   <p class="section-intro">
     Bespoke outdoor animal spaces built across Scotland.
   </p>
+
 </section>
+
 
 <footer>
   © 2026 Caledonian Catios & Custom Builds
 </footer>
 
+
 <script>
+
+/* ORIGINAL PRICES */
 
 const prices = {
 
@@ -669,226 +1381,912 @@ const prices = {
 
 };
 
+
+/* MONEY FORMAT */
+
 function money(value){
-  return "£" + Math.round(value).toLocaleString("en-GB");
+
+  return "£" +
+    Math.round(value).toLocaleString("en-GB");
+
 }
+
+
+/* GET DIMENSIONS */
+
+function getDimensions(){
+
+  const size =
+    document.getElementById("size").value;
+
+
+  if(size === "custom"){
+
+    const length =
+      Math.max(
+        0,
+        Number(
+          document.getElementById("customLength").value
+        ) || 0
+      );
+
+    const width =
+      Math.max(
+        0,
+        Number(
+          document.getElementById("customWidth").value
+        ) || 0
+      );
+
+    return {
+
+      length:length,
+
+      width:width,
+
+      area:length * width,
+
+      perimeter:2 * (length + width),
+
+      custom:true
+
+    };
+
+  }
+
+
+  const parts =
+    size.split("x").map(Number);
+
+
+  return {
+
+    length:parts[0],
+
+    width:parts[1],
+
+    area:parts[0] * parts[1],
+
+    perimeter:2 * (parts[0] + parts[1]),
+
+    custom:false
+
+  };
+
+}
+
+
+/* SELECT OPTION CARD */
 
 function selectCard(input){
 
-  document.querySelectorAll(".option-card").forEach(card=>{
-    card.classList.remove("selected");
-  });
+  document
+    .querySelectorAll(".option-card")
+    .forEach(card => {
 
-  input.closest(".option-card").classList.add("selected");
+      card.classList.remove("selected");
+
+    });
+
+
+  input
+    .closest(".option-card")
+    .classList.add("selected");
+
 }
 
-function togglePartition(){
 
-  const box=document.getElementById("partitionLengthBox");
+/* SELECT PHOTO STYLE */
 
-  box.classList.toggle(
-    "hidden",
-    !document.getElementById("partition").checked
+function selectVisualStyle(input){
+
+  document
+    .querySelectorAll(".style-card")
+    .forEach(card => {
+
+      card.classList.remove("selected");
+
+    });
+
+
+  input
+    .closest(".style-card")
+    .classList.add("selected");
+
+
+  /*
+    The two photos correspond with the
+    two main construction styles.
+
+    Selecting the photo also selects
+    the appropriate pricing style.
+  */
+
+  if(input.value === "full"){
+
+    document.querySelector(
+      'input[name="style"][value="fullLean"]'
+    ).checked = true;
+
+  }else{
+
+    document.querySelector(
+      'input[name="style"][value="boardLean"]'
+    ).checked = true;
+
+  }
+
+
+  selectCard(
+    document.querySelector(
+      'input[name="style"]:checked'
+    )
   );
+
+
+  updatePrice();
+
 }
 
-function toggleArea(id){
 
-  const box=document.getElementById(id+"Box");
+/* UPDATE AUTOMATIC MEASUREMENTS */
 
-  const checkboxMap={
-    astroturfArea:"astroturf",
-    compositeArea:"composite",
-    timberArea:"timberDecking",
-    perimeterLength:"perimeter"
-  };
+function updateMeasurements(){
 
-  box.classList.toggle(
-    "hidden",
-    !document.getElementById(checkboxMap[id]).checked
-  );
+  const d =
+    getDimensions();
+
+
+  document
+    .getElementById("customSizeBox")
+    .classList.toggle(
+      "hidden",
+      !d.custom
+    );
+
+
+  document
+    .getElementById("floorArea")
+    .textContent =
+      d.area.toFixed(2) + "m²";
+
+
+  document
+    .getElementById("autoPerimeter")
+    .textContent =
+      d.perimeter.toFixed(2) + "m";
+
+
+  /*
+    Automatically fill all area fields.
+  */
+
+  document
+    .getElementById("astroturfArea")
+    .value =
+      d.area.toFixed(2);
+
+
+  document
+    .getElementById("compositeArea")
+    .value =
+      d.area.toFixed(2);
+
+
+  document
+    .getElementById("timberArea")
+    .value =
+      d.area.toFixed(2);
+
+
+  document
+    .getElementById("perimeterLength")
+    .value =
+      d.perimeter.toFixed(2);
+
+
+  /*
+    Partition is based on the width.
+  */
+
+  document
+    .getElementById("partitionLength")
+    .value =
+      d.width.toFixed(2);
+
 }
+
+
+/* UPDATE VISIBILITY */
+
+function updateVisibility(){
+
+  document
+    .getElementById("partitionLengthBox")
+    .classList.toggle(
+      "hidden",
+      !document.getElementById("partition").checked
+    );
+
+
+  document
+    .getElementById("astroturfAreaBox")
+    .classList.toggle(
+      "hidden",
+      !document.getElementById("astroturf").checked
+    );
+
+
+  document
+    .getElementById("compositeAreaBox")
+    .classList.toggle(
+      "hidden",
+      !document.getElementById("composite").checked
+    );
+
+
+  document
+    .getElementById("timberAreaBox")
+    .classList.toggle(
+      "hidden",
+      !document.getElementById("timberDecking").checked
+    );
+
+
+  document
+    .getElementById("perimeterLengthBox")
+    .classList.toggle(
+      "hidden",
+      !document.getElementById("perimeter").checked
+    );
+
+}
+
+
+/* MAIN PRICE CALCULATOR */
 
 function updatePrice(){
 
-  const size=document.getElementById("size").value;
+  updateMeasurements();
 
-  const style=document.querySelector(
-    'input[name="style"]:checked'
-  ).value;
+  updateVisibility();
 
-  let total=prices[size][style];
 
-  let breakdown=[
-    "Base catio: "+money(total)
-  ];
+  const size =
+    document.getElementById("size").value;
 
-  if(document.getElementById("doubleDoor").checked){
 
-    total+=100;
+  const style =
+    document.querySelector(
+      'input[name="style"]:checked'
+    ).value;
+
+
+  const d =
+    getDimensions();
+
+
+  let total = 0;
+
+
+  let breakdown = [];
+
+
+  /*
+    Custom sizes don't have a fixed
+    base price.
+  */
+
+  if(d.custom){
+
+    if(d.length > 0 && d.width > 0){
+
+      breakdown.push(
+        "Custom size: " +
+        d.length +
+        " × " +
+        d.width +
+        "m — quote required"
+      );
+
+    }else{
+
+      breakdown.push(
+        "Custom size: enter your dimensions"
+      );
+
+    }
+
+  }else{
+
+    total =
+      prices[size][style];
+
+
+    breakdown.push(
+      "Base catio: " +
+      money(total)
+    );
+
+  }
+
+
+  /* DOUBLE DOOR */
+
+  if(
+    document.getElementById("doubleDoor").checked
+  ){
+
+    total += 100;
 
     breakdown.push(
       "Double main door: +£100"
     );
+
   }
 
-  if(document.getElementById("platform").checked){
 
-    const qty=Math.max(
-      0,
-      Number(document.getElementById("platformQty").value)||0
-    );
+  /* PLATFORM */
 
-    const cost=qty*20;
+  if(
+    document.getElementById("platform").checked
+  ){
 
-    total+=cost;
-
-    if(qty>0){
-      breakdown.push(
-        "Platform shelves ("+qty+"): +"+money(cost)
+    const qty =
+      Math.max(
+        0,
+        Number(
+          document.getElementById("platformQty").value
+        ) || 0
       );
-    }
-  }
 
-  if(document.getElementById("rope").checked){
 
-    const qty=Math.max(
-      0,
-      Number(document.getElementById("ropeQty").value)||0
-    );
+    const cost =
+      qty * 20;
 
-    const cost=qty*20;
 
-    total+=cost;
+    total += cost;
 
-    if(qty>0){
+
+    if(qty > 0){
+
       breakdown.push(
-        "50mm hanging rope ("+qty+"): +"+money(cost)
+        "Platform shelves (" +
+        qty +
+        "): +" +
+        money(cost)
       );
+
     }
+
   }
 
-  if(document.getElementById("partition").checked){
 
-    const length=Math.max(
-      0,
-      Number(document.getElementById("partitionLength").value)||0
-    );
+  /* ROPE */
 
-    const cost=100+(length*50);
+  if(
+    document.getElementById("rope").checked
+  ){
 
-    total+=cost;
+    const qty =
+      Math.max(
+        0,
+        Number(
+          document.getElementById("ropeQty").value
+        ) || 0
+      );
+
+
+    const cost =
+      qty * 20;
+
+
+    total += cost;
+
+
+    if(qty > 0){
+
+      breakdown.push(
+        "50mm hanging rope (" +
+        qty +
+        "): +" +
+        money(cost)
+      );
+
+    }
+
+  }
+
+
+  /* PARTITION */
+
+  if(
+    document.getElementById("partition").checked
+  ){
+
+    const length =
+      d.width;
+
+
+    const cost =
+      100 +
+      (length * 50);
+
+
+    total += cost;
+
 
     breakdown.push(
-      "Internal safety partition: +"+money(cost)
+      "Internal safety partition (" +
+      length.toFixed(2) +
+      "m): +" +
+      money(cost)
     );
+
   }
 
-  if(document.getElementById("astroturf").checked){
 
-    const area=Math.max(
-      0,
-      Number(document.getElementById("astroturfArea").value)||0
-    );
+  /* ASTROTURF */
 
-    const cost=area*25;
+  if(
+    document.getElementById("astroturf").checked
+  ){
 
-    total+=cost;
+    const area =
+      d.area;
 
-    if(area>0){
+
+    const cost =
+      area * 25;
+
+
+    total += cost;
+
+
+    if(area > 0){
+
       breakdown.push(
-        "Pet-friendly astroturf ("+area+"m²): +"+money(cost)
+        "Pet-friendly astroturf (" +
+        area.toFixed(2) +
+        "m²): +" +
+        money(cost)
       );
+
     }
+
   }
 
-  if(document.getElementById("composite").checked){
 
-    const area=Math.max(
-      0,
-      Number(document.getElementById("compositeArea").value)||0
-    );
+  /* COMPOSITE */
 
-    const cost=area*140;
+  if(
+    document.getElementById("composite").checked
+  ){
 
-    total+=cost;
+    const area =
+      d.area;
 
-    if(area>0){
+
+    const cost =
+      area * 140;
+
+
+    total += cost;
+
+
+    if(area > 0){
+
       breakdown.push(
-        "Composite decking ("+area+"m²): +"+money(cost)
+        "Composite decking (" +
+        area.toFixed(2) +
+        "m²): +" +
+        money(cost)
       );
+
     }
+
   }
 
-  if(document.getElementById("timberDecking").checked){
 
-    const area=Math.max(
-      0,
-      Number(document.getElementById("timberArea").value)||0
-    );
+  /* TIMBER DECKING */
 
-    const cost=area*85;
+  if(
+    document.getElementById("timberDecking").checked
+  ){
 
-    total+=cost;
+    const area =
+      d.area;
 
-    if(area>0){
+
+    const cost =
+      area * 85;
+
+
+    total += cost;
+
+
+    if(area > 0){
+
       breakdown.push(
-        "Timber decking ("+area+"m²): +"+money(cost)
+        "Timber decking (" +
+        area.toFixed(2) +
+        "m²): +" +
+        money(cost)
       );
+
     }
+
   }
 
-  if(document.getElementById("perimeter").checked){
 
-    const length=Math.max(
-      0,
-      Number(document.getElementById("perimeterLength").value)||0
-    );
+  /* PERIMETER */
 
-    const cost=length*20;
+  if(
+    document.getElementById("perimeter").checked
+  ){
 
-    total+=cost;
+    const length =
+      d.perimeter;
 
-    if(length>0){
+
+    const cost =
+      length * 20;
+
+
+    total += cost;
+
+
+    if(length > 0){
+
       breakdown.push(
-        "Perimeter timber base ("+length+"m): +"+money(cost)
+        "Perimeter timber base (" +
+        length.toFixed(2) +
+        "m): +" +
+        money(cost)
       );
+
     }
+
   }
 
-  document.getElementById("totalPrice").textContent=money(total);
 
-  document.getElementById("breakdown").innerHTML=
-    breakdown.join("<br>");
+  /* DISPLAY PRICE */
+
+  if(
+    d.custom &&
+    (!d.length || !d.width)
+  ){
+
+    document
+      .getElementById("totalPrice")
+      .textContent =
+        "Custom quote";
+
+  }else if(d.custom){
+
+    document
+      .getElementById("totalPrice")
+      .textContent =
+        "Custom quote";
+
+  }else{
+
+    document
+      .getElementById("totalPrice")
+      .textContent =
+        money(total);
+
+  }
+
+
+  document
+    .getElementById("breakdown")
+    .innerHTML =
+      breakdown.join("<br>");
 
 }
+
+
+/* SUBMIT BUILD REQUEST */
 
 function submitBuild(){
 
-  const total=document.getElementById("totalPrice").textContent;
+  const required = [
 
-  const size=document.getElementById("size").value;
+    "name",
+    "address",
+    "postcode",
+    "email",
+    "phone"
 
-  const name=
-    document.getElementById("name").value
-    ||"Customer";
+  ];
 
-  const location=
-    document.getElementById("location").value
-    ||"location to be confirmed";
 
-  document.getElementById("summary").innerHTML=
-    "<strong>"+name+"</strong>, your estimated build price is <strong>"+total+
-    "</strong>.<br><br>Size selected: <strong>"+size.replace("x"," × ")+"m</strong>."+
-    "<br>Location: <strong>"+location+"</strong>.";
+  for(
+    const id of required
+  ){
 
-  document.getElementById("result").style.display="block";
+    const field =
+      document.getElementById(id);
 
-  document.getElementById("result").scrollIntoView({
-    behavior:"smooth"
-  });
+
+    if(!field.value.trim()){
+
+      alert(
+        "Please complete all required booking details."
+      );
+
+      field.focus();
+
+      return;
+
+    }
+
+  }
+
+
+  const d =
+    getDimensions();
+
+
+  const style =
+    document.querySelector(
+      'input[name="style"]:checked'
+    ).value;
+
+
+  const styleNames = {
+
+    fullLean:
+      "Full Mesh Lean-to",
+
+    fullFree:
+      "Full Mesh Freestanding",
+
+    boardLean:
+      "Partially Boarded Lean-to",
+
+    boardFree:
+      "Partially Boarded Freestanding"
+
+  };
+
+
+  const selectedStyle =
+    styleNames[style];
+
+
+  const total =
+    document.getElementById(
+      "totalPrice"
+    ).textContent;
+
+
+  const photo1 =
+    document.getElementById(
+      "areaPhoto"
+    ).files.length > 0
+      ? "Yes"
+      : "Not supplied";
+
+
+  const photo2 =
+    document.getElementById(
+      "accessPhoto"
+    ).files.length > 0
+      ? "Yes"
+      : "Not supplied";
+
+
+  document
+    .getElementById("summary")
+    .innerHTML =
+
+      "<strong>" +
+      document.getElementById("name").value +
+      "</strong>, your build request is ready." +
+
+      "<br><br>" +
+
+      "Size: <strong>" +
+
+      (
+        d.custom
+          ? "Custom (" +
+            d.length +
+            " × " +
+            d.width +
+            "m)"
+          :
+            d.length +
+            " × " +
+            d.width +
+            "m"
+      ) +
+
+      "</strong>" +
+
+      "<br>" +
+
+      "Floor area: <strong>" +
+      d.area.toFixed(2) +
+      "m²</strong>" +
+
+      "<br>" +
+
+      "Perimeter: <strong>" +
+      d.perimeter.toFixed(2) +
+      "m</strong>" +
+
+      "<br>" +
+
+      "Layout: <strong>" +
+      selectedStyle +
+      "</strong>" +
+
+      "<br>" +
+
+      "Estimated price: <strong>" +
+      total +
+      "</strong>" +
+
+      "<br>" +
+
+      "Booking deposit: <strong>£50</strong>" +
+
+      "<br>" +
+
+      "Installation-area photo: <strong>" +
+      photo1 +
+      "</strong>" +
+
+      "<br>" +
+
+      "Access photo: <strong>" +
+      photo2 +
+      "</strong>" +
+
+      "<br><br>" +
+
+      "We'll be in touch to arrange a site check, confirm access and discuss the installation. " +
+
+      "We aim to install within 1 week once the booking and materials are confirmed." +
+
+      "<br><br>" +
+
+      "<strong>Note:</strong> The £50 deposit is currently shown as part of the booking interface only. Online payment still needs to be connected.";
+
+
+  document
+    .getElementById("result")
+    .style.display =
+      "block";
+
+
+  document
+    .getElementById("result")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
 
 }
+
+
+/* SIZE */
+
+document
+  .getElementById("size")
+  .addEventListener(
+    "change",
+    updatePrice
+  );
+
+
+/* CUSTOM DIMENSIONS */
+
+document
+  .getElementById("customLength")
+  .addEventListener(
+    "input",
+    updatePrice
+  );
+
+
+document
+  .getElementById("customWidth")
+  .addEventListener(
+    "input",
+    updatePrice
+  );
+
+
+/* MAIN STYLE CARDS */
+
+document
+  .querySelectorAll(
+    'input[name="style"]'
+  )
+  .forEach(input => {
+
+    input.addEventListener(
+      "change",
+      function(){
+
+        selectCard(this);
+
+        updatePrice();
+
+      }
+    );
+
+  });
+
+
+/* PHOTO STYLE CARDS */
+
+document
+  .querySelectorAll(
+    'input[name="visualStyle"]'
+  )
+  .forEach(input => {
+
+    input.addEventListener(
+      "change",
+      function(){
+
+        selectVisualStyle(this);
+
+      }
+    );
+
+  });
+
+
+/* ALL PRICE CONTROLS */
+
+[
+  "doubleDoor",
+  "platform",
+  "platformQty",
+  "rope",
+  "ropeQty",
+  "partition",
+  "astroturf",
+  "composite",
+  "timberDecking",
+  "perimeter"
+
+].forEach(id => {
+
+  const element =
+    document.getElementById(id);
+
+
+  element.addEventListener(
+    "change",
+    updatePrice
+  );
+
+
+  element.addEventListener(
+    "input",
+    updatePrice
+  );
+
+});
+
+
+/* SUBMIT */
+
+document
+  .getElementById("submitButton")
+  .addEventListener(
+    "click",
+    submitBuild
+  );
+
+
+/* START */
 
 updatePrice();
 
