@@ -343,11 +343,11 @@ textarea{
   color:#d9e0db;
 }
 
-/* BOOKING */
+/* DEPOSIT */
 
 .deposit-box{
   margin-top:30px;
-  padding:22px;
+  padding:25px;
   background:#fff8e8;
   border:2px solid #c89b3c;
   border-radius:10px;
@@ -358,13 +358,38 @@ textarea{
 }
 
 .deposit-price{
-  font-size:30px;
+  font-size:32px;
   font-weight:bold;
   color:#8a681f;
 }
 
 .deposit-box p{
   margin-top:8px;
+}
+
+.deposit-important{
+  margin-top:15px;
+  padding:15px;
+  background:white;
+  border-radius:8px;
+  border-left:5px solid #c89b3c;
+}
+
+.deposit-important strong{
+  color:#1e2b24;
+}
+
+.remaining-box{
+  margin-top:15px;
+  padding:15px;
+  background:#edf2ed;
+  border-radius:8px;
+}
+
+.remaining-price{
+  font-size:25px;
+  font-weight:bold;
+  color:#267143;
 }
 
 .booking-notice{
@@ -433,6 +458,10 @@ footer{
 
   .style-card img{
     height:240px;
+  }
+
+  .price{
+    font-size:40px;
   }
 
 }
@@ -542,14 +571,9 @@ footer{
 
     <!-- CUSTOM SIZE -->
 
-    <div
-      class="measure-box hidden"
-      id="customSizeBox"
-    >
+    <div class="measure-box hidden" id="customSizeBox">
 
-      <h4>
-        Custom size
-      </h4>
+      <h4>Custom size</h4>
 
       <p>
         Enter your required dimensions below.
@@ -700,7 +724,6 @@ footer{
     <h3>3. Choose your layout</h3>
 
     <div class="option-grid">
-
 
       <label class="option-card selected">
 
@@ -870,10 +893,7 @@ footer{
     </div>
 
 
-    <div
-      class="field hidden"
-      id="partitionLengthBox"
-    >
+    <div class="field hidden" id="partitionLengthBox">
 
       <label>
         Partition length in metres
@@ -914,10 +934,7 @@ footer{
     </div>
 
 
-    <div
-      class="field hidden"
-      id="astroturfAreaBox"
-    >
+    <div class="field hidden" id="astroturfAreaBox">
 
       <label>
         Astroturf area in m²
@@ -952,10 +969,7 @@ footer{
     </div>
 
 
-    <div
-      class="field hidden"
-      id="compositeAreaBox"
-    >
+    <div class="field hidden" id="compositeAreaBox">
 
       <label>
         Composite decking area in m²
@@ -990,10 +1004,7 @@ footer{
     </div>
 
 
-    <div
-      class="field hidden"
-      id="timberAreaBox"
-    >
+    <div class="field hidden" id="timberAreaBox">
 
       <label>
         Timber decking area in m²
@@ -1028,10 +1039,7 @@ footer{
     </div>
 
 
-    <div
-      class="field hidden"
-      id="perimeterLengthBox"
-    >
+    <div class="field hidden" id="perimeterLengthBox">
 
       <label>
         Perimeter length in metres
@@ -1102,7 +1110,7 @@ footer{
     <div class="live-price">
 
       <small>
-        ESTIMATED LIVE PRICE
+        ESTIMATED BUILD PRICE
       </small>
 
       <div
@@ -1138,6 +1146,39 @@ footer{
         A £50 deposit is required to secure your booking
         and allow materials to be ordered.
       </p>
+
+
+      <div class="deposit-important">
+
+        <strong>
+          IMPORTANT: Your £50 deposit comes OFF the total cost of your build.
+        </strong>
+
+        <p>
+          It is not an additional charge. The £50 you pay today
+          will be deducted from the final balance when your catio
+          is installed.
+        </p>
+
+      </div>
+
+
+      <div class="remaining-box">
+
+        <strong>
+          Example:
+        </strong>
+
+        <p>
+          If your catio costs £1,200:
+        </p>
+
+        <div class="remaining-price">
+          £1,200 total − £50 deposit = £1,150 remaining
+        </div>
+
+      </div>
+
 
       <div class="booking-notice">
 
@@ -1276,13 +1317,24 @@ footer{
     <br>
 
 
+    <!-- FINAL PAYMENT BUTTON -->
+
     <button
       class="btn"
       type="button"
       id="submitButton"
     >
-      SEND BUILD REQUEST
+      SUBMIT BUILD REQUEST & PAY £50 DEPOSIT
     </button>
+
+
+    <p style="margin-top:12px;font-size:14px;color:#58615b;">
+
+      By continuing, your build request will be submitted and
+      you will be taken securely to Stripe to pay the £50 deposit.
+      <strong>The £50 deposit will be deducted from your final build balance.</strong>
+
+    </p>
 
 
     <div
@@ -1324,7 +1376,9 @@ footer{
 
 <script>
 
-/* PRICES */
+/* =========================
+   PRICES
+========================= */
 
 const prices = {
 
@@ -1380,7 +1434,17 @@ const prices = {
 };
 
 
-/* MONEY */
+/* =========================
+   STRIPE
+========================= */
+
+const stripeDepositLink =
+  "https://buy.stripe.com/7sY00lbt93T69Bzg6N4gg00";
+
+
+/* =========================
+   MONEY
+========================= */
 
 function money(value){
 
@@ -1390,7 +1454,9 @@ function money(value){
 }
 
 
-/* DIMENSIONS */
+/* =========================
+   DIMENSIONS
+========================= */
 
 function getDimensions(){
 
@@ -1446,7 +1512,9 @@ function getDimensions(){
 }
 
 
-/* SELECT LAYOUT CARD */
+/* =========================
+   SELECT LAYOUT CARD
+========================= */
 
 function selectCard(input){
 
@@ -1466,7 +1534,9 @@ function selectCard(input){
 }
 
 
-/* SELECT VISUAL STYLE */
+/* =========================
+   SELECT VISUAL STYLE
+========================= */
 
 function selectVisualStyle(input){
 
@@ -1511,7 +1581,9 @@ function selectVisualStyle(input){
 }
 
 
-/* MEASUREMENTS */
+/* =========================
+   MEASUREMENTS
+========================= */
 
 function updateMeasurements(){
 
@@ -1571,7 +1643,9 @@ function updateMeasurements(){
 }
 
 
-/* VISIBILITY */
+/* =========================
+   VISIBILITY
+========================= */
 
 function updateVisibility(){
 
@@ -1617,7 +1691,155 @@ function updateVisibility(){
 }
 
 
-/* PRICE CALCULATOR */
+/* =========================
+   PRICE CALCULATOR
+========================= */
+
+function calculateTotal(){
+
+  const size =
+    document.getElementById("size").value;
+
+
+  const style =
+    document.querySelector(
+      'input[name="style"]:checked'
+    ).value;
+
+
+  const d =
+    getDimensions();
+
+
+  let total = 0;
+
+
+  if(!d.custom){
+
+    total =
+      prices[size][style];
+
+  }
+
+
+  /* DOUBLE DOOR */
+
+  if(
+    document.getElementById("doubleDoor").checked
+  ){
+
+    total += 100;
+
+  }
+
+
+  /* PLATFORM */
+
+  if(
+    document.getElementById("platform").checked
+  ){
+
+    const qty =
+      Math.max(
+        0,
+        Number(
+          document.getElementById("platformQty").value
+        ) || 0
+      );
+
+    total += qty * 20;
+
+  }
+
+
+  /* ROPE */
+
+  if(
+    document.getElementById("rope").checked
+  ){
+
+    const qty =
+      Math.max(
+        0,
+        Number(
+          document.getElementById("ropeQty").value
+        ) || 0
+      );
+
+    total += qty * 20;
+
+  }
+
+
+  /* PARTITION */
+
+  if(
+    document.getElementById("partition").checked
+  ){
+
+    total +=
+      100 +
+      (d.width * 50);
+
+  }
+
+
+  /* ASTROTURF */
+
+  if(
+    document.getElementById("astroturf").checked
+  ){
+
+    total +=
+      d.area * 25;
+
+  }
+
+
+  /* COMPOSITE */
+
+  if(
+    document.getElementById("composite").checked
+  ){
+
+    total +=
+      d.area * 140;
+
+  }
+
+
+  /* TIMBER DECKING */
+
+  if(
+    document.getElementById("timberDecking").checked
+  ){
+
+    total +=
+      d.area * 85;
+
+  }
+
+
+  /* PERIMETER */
+
+  if(
+    document.getElementById("perimeter").checked
+  ){
+
+    total +=
+      d.perimeter * 20;
+
+  }
+
+
+  return total;
+
+}
+
+
+/* =========================
+   PRICE DISPLAY
+========================= */
 
 function updatePrice(){
 
@@ -1899,7 +2121,7 @@ function updatePrice(){
   }
 
 
-  /* DISPLAY PRICE */
+  /* DISPLAY */
 
   if(
     d.custom &&
@@ -1936,7 +2158,9 @@ function updatePrice(){
 }
 
 
-/* SEND BUILD REQUEST */
+/* =========================
+   SUBMIT BUILD REQUEST
+========================= */
 
 async function submitBuild(){
 
@@ -2004,9 +2228,15 @@ async function submitBuild(){
 
 
   const total =
-    document.getElementById(
-      "totalPrice"
-    ).textContent;
+    calculateTotal();
+
+
+  /* CUSTOM SIZE */
+
+  const priceDisplay =
+    d.custom
+      ? "Custom quote"
+      : money(total);
 
 
   /* FORM DATA */
@@ -2092,14 +2322,28 @@ async function submitBuild(){
 
 
   formData.append(
-    "Estimated Price",
-    total
+    "Estimated Build Price",
+    priceDisplay
   );
 
 
   formData.append(
-    "Booking Deposit",
+    "Deposit Paid",
     "£50"
+  );
+
+
+  formData.append(
+    "Deposit Deducted From Final Balance",
+    "Yes — £50 deposit comes off the total build price"
+  );
+
+
+  formData.append(
+    "Remaining Balance",
+    d.custom
+      ? "To be confirmed"
+      : money(Math.max(0,total - 50))
   );
 
 
@@ -2177,7 +2421,7 @@ async function submitBuild(){
   );
 
 
-  /* SEND TO FORMSPREE */
+  /* SEND FORM FIRST */
 
   try{
 
@@ -2198,89 +2442,50 @@ async function submitBuild(){
 
     if(response.ok){
 
-      document
-        .getElementById("summary")
-        .innerHTML =
+      /*
+       * Store the build information temporarily so it can
+       * be referred to after the customer returns from Stripe.
+       */
 
-          "<strong>" +
-          document.getElementById("name").value +
-          "</strong>, your build request has been sent successfully!" +
+      const bookingData = {
 
-          "<br><br>" +
+        name:
+          document.getElementById("name").value,
 
-          "Size: <strong>" +
+        email:
+          document.getElementById("email").value,
 
-          (
-            d.custom
-              ?
-                "Custom (" +
-                d.length +
-                " × " +
-                d.width +
-                "m)"
-              :
-                d.length +
-                " × " +
-                d.width +
-                "m"
-          ) +
+        total:
+          priceDisplay,
 
-          "</strong>" +
+        deposit:
+          "£50",
 
-          "<br>" +
+        remaining:
+          d.custom
+            ? "Custom quote"
+            : money(Math.max(0,total - 50))
 
-          "Floor area: <strong>" +
-          d.area.toFixed(2) +
-          "m²</strong>" +
-
-          "<br>" +
-
-          "Perimeter: <strong>" +
-          d.perimeter.toFixed(2) +
-          "m</strong>" +
-
-          "<br>" +
-
-          "Layout: <strong>" +
-          selectedStyle +
-          "</strong>" +
-
-          "<br>" +
-
-          "Estimated price: <strong>" +
-          total +
-          "</strong>" +
-
-          "<br>" +
-
-          "Booking deposit: <strong>£50</strong>" +
-
-          "<br><br>" +
-
-          "We'll be in touch to arrange a site check, confirm access and discuss the installation." +
-
-          "<br><br>" +
-
-          "We'll also ask you to send photos of the installation area and access when we contact you.";
+      };
 
 
-      document
-        .getElementById("result")
-        .style.display =
-          "block";
+      sessionStorage.setItem(
+        "caledonianCatioBooking",
+        JSON.stringify(bookingData)
+      );
 
 
-      document
-        .getElementById("result")
-        .scrollIntoView({
-          behavior:"smooth"
-        });
+      /*
+       * Send customer to Stripe.
+       */
 
+      window.location.href =
+        stripeDepositLink;
 
     }else{
 
       alert(
-        "Sorry, there was a problem sending your request. Please try again."
+        "Sorry, there was a problem sending your build request. Please try again."
       );
 
     }
@@ -2297,6 +2502,11 @@ async function submitBuild(){
   }
 
 }
+
+
+/* =========================
+   EVENT LISTENERS
+========================= */
 
 
 /* SIZE */
