@@ -180,8 +180,6 @@ section{
   font-weight:bold;
 }
 
-/* STYLE PHOTOS */
-
 .style-grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -285,8 +283,6 @@ textarea{
   display:none;
 }
 
-/* AUTOMATIC MEASUREMENTS */
-
 .measure-box{
   margin-top:20px;
   padding:20px;
@@ -312,8 +308,6 @@ textarea{
   grid-template-columns:1fr 1fr;
   gap:15px;
 }
-
-/* PRICE */
 
 .live-price{
   margin-top:30px;
@@ -349,16 +343,17 @@ textarea{
   margin-top:30px;
   padding:25px;
   background:#fff8e8;
-  border:2px solid #c89b3c;
-  border-radius:10px;
+  border:3px solid #c89b3c;
+  border-radius:12px;
 }
 
 .deposit-box h3{
   margin:0 0 8px;
+  font-size:25px;
 }
 
 .deposit-price{
-  font-size:32px;
+  font-size:38px;
   font-weight:bold;
   color:#8a681f;
 }
@@ -369,19 +364,20 @@ textarea{
 
 .deposit-important{
   margin-top:15px;
-  padding:15px;
+  padding:18px;
   background:white;
   border-radius:8px;
-  border-left:5px solid #c89b3c;
+  border-left:6px solid #c89b3c;
 }
 
 .deposit-important strong{
   color:#1e2b24;
+  font-size:18px;
 }
 
 .remaining-box{
   margin-top:15px;
-  padding:15px;
+  padding:18px;
   background:#edf2ed;
   border-radius:8px;
 }
@@ -1151,13 +1147,14 @@ footer{
       <div class="deposit-important">
 
         <strong>
-          IMPORTANT: Your £50 deposit comes OFF the total cost of your build.
+          YOUR £50 DEPOSIT COMES OFF THE TOTAL BUILD COST
         </strong>
 
         <p>
-          It is not an additional charge. The £50 you pay today
-          will be deducted from the final balance when your catio
-          is installed.
+          The £50 deposit is <strong>NOT an additional charge.</strong>
+          It is part-payment towards your catio.
+          The £50 you pay today will be deducted from the
+          final balance you pay when your catio is installed.
         </p>
 
       </div>
@@ -1332,7 +1329,8 @@ footer{
 
       By continuing, your build request will be submitted and
       you will be taken securely to Stripe to pay the £50 deposit.
-      <strong>The £50 deposit will be deducted from your final build balance.</strong>
+      <strong>The £50 deposit is part of your total build price
+      and will be deducted from your final balance.</strong>
 
     </p>
 
@@ -1722,8 +1720,6 @@ function calculateTotal(){
   }
 
 
-  /* DOUBLE DOOR */
-
   if(
     document.getElementById("doubleDoor").checked
   ){
@@ -1732,8 +1728,6 @@ function calculateTotal(){
 
   }
 
-
-  /* PLATFORM */
 
   if(
     document.getElementById("platform").checked
@@ -1752,8 +1746,6 @@ function calculateTotal(){
   }
 
 
-  /* ROPE */
-
   if(
     document.getElementById("rope").checked
   ){
@@ -1771,8 +1763,6 @@ function calculateTotal(){
   }
 
 
-  /* PARTITION */
-
   if(
     document.getElementById("partition").checked
   ){
@@ -1784,8 +1774,6 @@ function calculateTotal(){
   }
 
 
-  /* ASTROTURF */
-
   if(
     document.getElementById("astroturf").checked
   ){
@@ -1795,8 +1783,6 @@ function calculateTotal(){
 
   }
 
-
-  /* COMPOSITE */
 
   if(
     document.getElementById("composite").checked
@@ -1808,8 +1794,6 @@ function calculateTotal(){
   }
 
 
-  /* TIMBER DECKING */
-
   if(
     document.getElementById("timberDecking").checked
   ){
@@ -1819,8 +1803,6 @@ function calculateTotal(){
 
   }
 
-
-  /* PERIMETER */
 
   if(
     document.getElementById("perimeter").checked
@@ -1867,8 +1849,6 @@ function updatePrice(){
   let breakdown = [];
 
 
-  /* BASE */
-
   if(d.custom){
 
     if(d.length > 0 && d.width > 0){
@@ -1902,8 +1882,6 @@ function updatePrice(){
   }
 
 
-  /* DOUBLE DOOR */
-
   if(
     document.getElementById("doubleDoor").checked
   ){
@@ -1916,8 +1894,6 @@ function updatePrice(){
 
   }
 
-
-  /* PLATFORM */
 
   if(
     document.getElementById("platform").checked
@@ -1953,8 +1929,6 @@ function updatePrice(){
   }
 
 
-  /* ROPE */
-
   if(
     document.getElementById("rope").checked
   ){
@@ -1989,8 +1963,6 @@ function updatePrice(){
   }
 
 
-  /* PARTITION */
-
   if(
     document.getElementById("partition").checked
   ){
@@ -2012,8 +1984,6 @@ function updatePrice(){
 
   }
 
-
-  /* ASTROTURF */
 
   if(
     document.getElementById("astroturf").checked
@@ -2040,8 +2010,6 @@ function updatePrice(){
   }
 
 
-  /* COMPOSITE */
-
   if(
     document.getElementById("composite").checked
   ){
@@ -2066,8 +2034,6 @@ function updatePrice(){
 
   }
 
-
-  /* TIMBER DECKING */
 
   if(
     document.getElementById("timberDecking").checked
@@ -2094,8 +2060,6 @@ function updatePrice(){
   }
 
 
-  /* PERIMETER */
-
   if(
     document.getElementById("perimeter").checked
   ){
@@ -2120,8 +2084,6 @@ function updatePrice(){
 
   }
 
-
-  /* DISPLAY */
 
   if(
     d.custom &&
@@ -2231,12 +2193,16 @@ async function submitBuild(){
     calculateTotal();
 
 
-  /* CUSTOM SIZE */
-
   const priceDisplay =
     d.custom
       ? "Custom quote"
       : money(total);
+
+
+  const remainingDisplay =
+    d.custom
+      ? "To be confirmed"
+      : money(Math.max(0,total - 50));
 
 
   /* FORM DATA */
@@ -2322,28 +2288,26 @@ async function submitBuild(){
 
 
   formData.append(
-    "Estimated Build Price",
+    "Estimated Total Build Price",
     priceDisplay
   );
 
 
   formData.append(
-    "Deposit Paid",
+    "Deposit Required",
     "£50"
   );
 
 
   formData.append(
-    "Deposit Deducted From Final Balance",
-    "Yes — £50 deposit comes off the total build price"
+    "Deposit Treatment",
+    "£50 deposit is part-payment and comes OFF the total build cost"
   );
 
 
   formData.append(
-    "Remaining Balance",
-    d.custom
-      ? "To be confirmed"
-      : money(Math.max(0,total - 50))
+    "Remaining Balance After Deposit",
+    remainingDisplay
   );
 
 
@@ -2421,7 +2385,11 @@ async function submitBuild(){
   );
 
 
-  /* SEND FORM FIRST */
+  /*
+   * SEND BUILD REQUEST FIRST.
+   * ONLY IF FORMSPREE ACCEPTS IT DO WE SEND
+   * THE CUSTOMER TO STRIPE.
+   */
 
   try{
 
@@ -2442,11 +2410,6 @@ async function submitBuild(){
 
     if(response.ok){
 
-      /*
-       * Store the build information temporarily so it can
-       * be referred to after the customer returns from Stripe.
-       */
-
       const bookingData = {
 
         name:
@@ -2461,10 +2424,11 @@ async function submitBuild(){
         deposit:
           "£50",
 
+        depositDeducted:
+          true,
+
         remaining:
-          d.custom
-            ? "Custom quote"
-            : money(Math.max(0,total - 50))
+          remainingDisplay
 
       };
 
@@ -2476,7 +2440,8 @@ async function submitBuild(){
 
 
       /*
-       * Send customer to Stripe.
+       * BUILD REQUEST HAS NOW BEEN SENT.
+       * CUSTOMER IS THEN SENT TO STRIPE.
        */
 
       window.location.href =
